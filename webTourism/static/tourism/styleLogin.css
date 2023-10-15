@@ -1,0 +1,9 @@
+body{
+    margin: 0;
+
+}
+.login-form{
+    color: #d4d4d4;
+    border-radius: 25px;
+    margin: 0 auto;
+}

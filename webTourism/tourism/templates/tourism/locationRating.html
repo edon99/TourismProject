@@ -1,0 +1,38 @@
+{% extends "tourism/base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'tourism/styleRating.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Abril+Fatface" rel="stylesheet">
+    <title>Home</title>
+</head>
+<body>
+    <div class="home-container">
+        <h1 class="title">Location rating.</h1>
+        <p class="description">Rate your experience in a location you went to<br>and share it with everyone.</p>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <span>Share a photo of your experience at the location (basically proof)</span>
+                {{ form.proof }}
+                <span class="error">{{ form.proof.errors }}</span>
+            </div>
+            <span>Submit the rating of this location (out of 10)</span>
+            <div class="form-group rating">
+                
+                {{ form.rating }}
+                <span class="error">{{ form.rating.errors }}</span>
+            </div>
+            <div class="form-group">
+                <span>Go over the details of your experience in this location. </span>
+                {{ form.comment }}
+                <span class="error">{{ form.comment.errors }}</span>
+            </div>
+            <button class="submit" type="submit">Submit Rating</button>
+        </form>
+    </div>
+</body>
+{% endblock %}

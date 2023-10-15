@@ -1,0 +1,53 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'dashboard/styleSidebar.css' %}">
+</head>
+<div class="sidebar">
+    <h2 style="padding-left: 20px;">Dashboard</h2>
+    <a href="{% url 'admin-dash' %}">Dashboard</a>
+    <a href="{% url 'admin-users' %}">Users</a>
+    <a href="#">Settings</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+{% if messages %}
+{% for message in messages %}
+<div class="success-message">
+    <i>{{ message }}</i>
+    <span class="close-button" onclick="closeSuccessMessage()">&times;</span>
+</div>
+{% endfor %}
+{% endif %}
+{% block content %}
+
+{% endblock %}
+
+<script>
+
+    // Function to show the success message
+    function showSuccessMessage() {
+        var successMessage = document.querySelector('.success-message');
+        if (successMessage) {
+            successMessage.style.display = 'block'; // Make it visible
+
+            // Delaying the opacity change to allow the initial display
+            setTimeout(function () {
+                successMessage.style.opacity = '1';
+            }, 10); // A small delay (e.g., 10ms) is enough
+        }
+    }
+
+    // Function to close the success message
+    function closeSuccessMessage() {
+        var successMessage = document.querySelector('.success-message');
+        if (successMessage) {
+            successMessage.style.opacity = '0'; // Fade out
+            setTimeout(function () {
+                successMessage.style.display = 'none'; // Hide after fading out
+            }, 500); // Adjust the duration (in milliseconds) as needed
+        }
+    }
+
+    // Call showSuccessMessage() when the page is loaded
+    window.addEventListener('load', showSuccessMessage);
+
+</script>

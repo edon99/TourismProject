@@ -1,0 +1,135 @@
+ 
+ body {
+    background: #1f1f1f;
+    font-family: "Open Sans Condensed", sans-serif;
+  }
+  
+  h1, h2, h3, h4 {
+    font-family: "Abril Fatface", serif;
+  }
+  
+  #container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 70%;
+    width: 100%;
+    z-index: 1;
+  }
+  
+  .slide {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    transition: all 1s;
+    z-index: 1;
+  }
+ 
+  .slide.anim-in .image {
+    height: 110%;
+    width: 110%;
+    -webkit-animation: img-anim-in 1.2s forwards;
+            animation: img-anim-in 1.2s forwards;
+  }
+
+
+
+
+  .slide .image {
+    position: absolute;
+    background-size: cover;
+    background-position: center center;
+    pointer-events: none;
+    transition: all 1s;
+  }
+  .slide .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(20, 20, 20, 0.7), rgba(20, 20, 20, 0));
+    background-position: 0 0;
+    background-size: 100% 200%;
+    opacity: 1;
+    pointer-events: none;
+    transition: all 0.5s;
+  }
+  .slide .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+  }
+  .slide .content .title {
+    position: absolute;
+    top: 75px;
+    height: 65px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 3em;
+    text-align: center;
+    text-shadow: 0 2px 2px #2f2f2f;
+    color: #3f3f3f;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+  }
+  .slide .content .title:after {
+    position: absolute;
+    top: 0;
+    height: 0;
+    width: 100%;
+    display: block;
+    content: attr(data-title);
+    overflow: hidden;
+    color: #fff59d;
+    transition: all 0.85s;
+  }
+
+  .slide:hover:not(.active):not(.anim-out) .image {
+    transform: scale(1.1);
+  }
+  .slide:hover:not(.active):not(.anim-out) .overlay {
+    opacity: 0.6;
+  }
+  .slide:hover:not(.active):not(.anim-out) .content .title {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+  .slide:hover:not(.active):not(.anim-out) .content .title:after {
+    height: 100%;
+  }
+
+/* for entry */
+  
+  @-webkit-keyframes img-anim-in {
+    to {
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  
+  @keyframes img-anim-in {
+    to {
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  @-webkit-keyframes img-anim-out {
+    to {
+      left: -100%;
+    }
+  }
+  @keyframes img-anim-out {
+    to {
+      left: -100%;
+    }
+  }

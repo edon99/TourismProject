@@ -1,0 +1,125 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'tourism/styleLogin.css' %}">
+    <link rel="stylesheet" href="{% static 'tourism/styleBase.css' %}">
+    <title>Document</title>
+</head>
+<body>
+<header>
+        <nav class="navbar" style="background-color: #33673b;">
+            <div class="container">
+                <h1 class="logo">My Website</h1>
+                <div class="nav-links">  
+                    <div class="top">
+                    <ul>    
+                        <li>
+                            <select>
+                                <option value="en">English</option>
+                                <option value="es">العربية</option>
+                                <option value="es">Francais</option>
+                            </select>
+                        </li>
+                    </ul>
+                    </div>
+                    
+                        <div class="bot">
+                        <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>  
+                        </ul>
+                        </div>
+                        
+                    
+                 </div>
+            </div>
+        </nav>
+</header>
+<main>
+    <div style="color: white;" class="left">
+    <h1>Welcome to My Website!</h1>
+   <span>My Website helps tourists and visitors to discover city secret places that few people know!</span>
+    <div style="display: flex; flex-direction: column; align-items: center;margin-top:200px">
+        <span >Are you new here? join us now!</span>
+        <a class="signup" href="{% url 'signup' %}">Sign Up</a>
+    </div>
+   
+    </div>
+<div class="right">
+    <div class="login-form">
+        <h1>Login</h1>
+        {% if messages %}
+  			<ul class="messages">
+    		{% for message in messages %}
+      			<li  style="color: rgb(181, 48, 48)" class="error">{{ message }}</li>
+    		{% endfor %}
+  			</ul>
+		{% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" name="username">
+            {{ form.username.errors }}
+            <label for="password">Password</label>
+            <input type="password" name="password">
+            {{ form.password.errors }}
+            <div style="display: flex;align-items: center;flex-direction: column;">
+            <button class="submit" type="submit">Login</button>  
+            </div>
+            <div style="display: flex; justify-content: center;">
+          <p>---- or ----</p>  
+        </div>
+        </form>
+        
+        
+        {% load socialaccount %}
+        <!-- <a class="google-login" href="{% provider_login_url 'google' %}">Continue with Google</a> -->
+        <a href="{% provider_login_url 'google' %}" class="button">
+            <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
+            <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+            <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+            <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+            <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+          </svg>
+            Continue with Google
+        </a>
+    </div>
+</div>
+</main>
+
+</body>
+<script>
+    window.addEventListener('scroll', function () {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 100) {
+            navbar.classList.add('sticky');
+        } else {
+            navbar.classList.remove('sticky');
+        }
+    });
+    function showSuccessMessage() {
+        var successMessage = document.querySelector('.success-message');
+        if (successMessage) {
+            successMessage.style.display = 'block'; // Make it visible
+
+            // Delaying the opacity change to allow the initial display
+            setTimeout(function () {
+                successMessage.style.opacity = '1';
+            }, 10); // A small delay (e.g., 10ms) is enough
+        }
+    }
+
+    // Function to close the success message
+    function closeSuccessMessage() {
+        var successMessage = document.querySelector('.success-message');
+        if (successMessage) {
+            successMessage.style.opacity = '0'; // Fade out
+            setTimeout(function () {
+                successMessage.style.display = 'none'; // Hide after fading out
+            }, 500); // Adjust the duration (in milliseconds) as needed
+        }
+    }
+
+    // Call showSuccessMessage() when the page is loaded
+    window.addEventListener('load', showSuccessMessage);
+</script>

@@ -1,0 +1,135 @@
+{% extends "tourism/base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'tourism/styleProfile.css' %}">
+</head>
+<body>
+    <div class="home-container">
+        <h1 class="title">Profile</h1>
+        <p class="description">Here you can view your details, update them and even get verified! <br>(if you're not already)</p>
+    </div>
+    <div class="content">
+        <div class="profile-container">           
+            <h2 style="margin: 0;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 8.5C15 10.433 13.433 12 11.5 12C9.567 12 8 10.433 8 8.5C8 6.567 9.567 5 11.5 5C13.433 5 15 6.567 15 8.5Z" fill="#000000"></path> <path d="M17.6305 20H5.94623C5.54449 20 5.31716 19.559 5.56788 19.2451C6.68379 17.8479 9.29072 15 12 15C14.7275 15 17.0627 17.8864 18.0272 19.2731C18.2474 19.5897 18.0161 20 17.6305 20Z" fill="#000000" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg> {{ profile.username }} </h2>
+            <div class="all">
+                    <div class="details">
+                        <h2>User Details</h2>
+                        <div class="info"><span>First Name</span><span>{{ profile.first_name }}</span></div>
+                        <div class="info"><span>Last Name</span><span>{{ profile.last_name }}</span></div>
+                        <div class="info"><span>Email</span><span>{{ profile.email }}</span></div>
+                        <div class="info"><span>Verification</span>
+                            {% if profile.verified == True %}
+                            <span>
+                                User verified {% if user.id == profile.id %} <a id="reviewVerificationLink" style="text-decoration: underline; font-size: 14px; cursor: pointer;">Review Verification</a> {% endif %}
+                            </span>
+                            {% else %}
+                            <span>User not verified</span>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                    {% if user.id == profile.id %}
+                    
+                    <div class="verification">
+                        <h2>Verification</h2>
+                        <div class="info"><span>Phone Number</span><span>{{ verif.phone_number }}</span></div>
+                        <div class="info"><span>City</span><span>{{ verif.city }}</span></div>
+                        <div class="info"><span>Address</span><span>{{ verif.address }}</span></div>
+                        <div class="info"><span>ID Card</span><span>{{ verif.idCard }}</span></div>
+                    </div>
+                    {% endif %}
+            </div>
+            
+            
+            <div style="display: flex; justify-content: center; margin-top: 10px;">
+              {% if user.id == profile.id %}
+                
+                <button id="openModalBtn" class="button">Edit Profile</a>
+            {% endif %}  
+            </div>
+            <span style="color: brown;">*Verification details cannot be edited.</span>
+
+            
+        </div>
+        <div class="modal">
+            <div class="modal-container">
+                <h1>Edit Profile</h1>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        {{ form.first_name }}
+                        <span class="error">{{ form.first_name.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        {{ form.last_name }}
+                        <span class="error">{{ form.last_name.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        {{ form.email }}
+                        <span class="error">{{ form.email.errors }}</span>
+                    </div>
+                    
+                
+                <button type="submit" class="button">Update</button>
+                
+                </form>
+                <button class="button cancel" id="closeModalBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // Function to open the modal
+function openModal() {
+    var modal = document.querySelector('.modal');
+    var modalContainer = document.querySelector('.modal-container');
+    
+    modal.style.display = 'block';
+    modalContainer.style.display = 'block';
+}
+
+// Function to close the modal
+function closeModal() {
+    var modal = document.querySelector('.modal');
+    var modalContainer = document.querySelector('.modal-container');
+    
+    modal.style.display = 'none';
+    modalContainer.style.display = 'none';
+}
+
+// Add click event listener to open modal button
+document.getElementById('openModalBtn').addEventListener('click', openModal);
+
+// Add click event listener to close modal button
+document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+
+// Close the modal if the user clicks outside of it
+window.addEventListener('click', function(event) {
+    var modal = document.querySelector('.modal');
+    if (event.target == modal) {
+        closeModal();
+    }
+});
+
+</script>
+<script>
+    // JavaScript function to toggle the style of .verification
+    document.addEventListener('DOMContentLoaded', function() {
+        const reviewVerificationLink = document.getElementById('reviewVerificationLink');
+        const verificationElement = document.querySelector('.verification');
+
+        if (reviewVerificationLink && verificationElement) {
+            reviewVerificationLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                verificationElement.style.display = 'flex';
+            });
+        }
+    });
+</script>
+
+{% endblock %}

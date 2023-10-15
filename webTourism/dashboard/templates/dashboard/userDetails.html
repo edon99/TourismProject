@@ -1,0 +1,52 @@
+{% extends "dashboard/adminBase.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'dashboard/styleUserDetails.css' %}">
+    <title>User Details</title>
+</head>
+<body>
+    <div class="content">
+        <h2>User Details</h2>
+        <div class="container">
+            <div class="image">
+                <img src="{{ verif.idCard.url }}" alt="">
+            </div>
+            <div class="details">
+                <div class="info label"><span>First name</span> <span>Last name</span></div>
+               <div class="info">
+                <span>{{ verif.user.first_name }}</span><span>{{ verif.user.last_name}}</span>
+               </div> 
+               <div class="info label"><span>City</span> <span>Address</span></div>
+               <div class="info">
+                <span>{{ verif.city }}</span><span>{{ verif.address}}</span>
+               </div> 
+               <div class="info label"><span>Phone number</span> <span>Email</span></div>
+               <div class="info">
+                <span>{{ verif.phone_number }}</span><span>{{ verif.user.email}}</span>
+               </div>
+               <div class="info label"><span>Last Login</span> <span>Date joined</span></div>
+               <div class="info">
+                <span>{{ verif.user.last_login }}</span><span>{{ verif.user.date_joined}}</span>
+               </div>
+               
+                {% if verif.state == 'Pending' %}
+                <form method="post" class="info">
+                    {% csrf_token %}
+                    <span><button type="submit" name="action" value="accept" data-id="{{ verif.user.id }}" class="btn accept">Accept</button></span>
+                    <span><button type="submit" name="action" value="refuse" data-id="{{ verif.user.id }}" class="btn refuse">Refuse</button></span>
+                </form>
+                {% elif verif.state == 'Accepted' %}
+                <div class="info"><span style="color: #33673b; font-size: 20px;">User is Accepted by {{ user.username }}</span>
+                </div>
+                {% else %}
+                <div class="info"><span style="color: rgb(146, 0, 0); font-size: 20px;">User is refused by {{ user.username }}</span>
+                </div>
+                {% endif %}
+            </div>
+            
+        </div>
+        
+    </div>
+</body>
+{% endblock %}

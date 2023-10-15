@@ -1,0 +1,163 @@
+{% extends "tourism/base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <title>Suggest a location</title>
+    <link rel="stylesheet" href="{% static 'tourism/styleNewLocation.css' %}">
+    <!-- Include Leaflet CSS and JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+</head>
+<body>
+    <div class="home-container">
+        <h1 class="title">Submitting a new location.</h1>
+        <p class="description">Your submission will go through a verification process for security purposes.<br>You will be updated shortly through your inbox. </p>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" class="signup-form" enctype="multipart/form-data" id="location-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Title</label>
+                {{ form.title }}
+                <span class="error">{{ form.title.errors }}</span>
+            </div>
+            <div class="form-group">
+                <label for="summary">Summary</label>
+                {{ form.summary }}
+                <span class="error">{{ form.summary.errors }}</span>
+            </div>
+           
+            <div class="form-group">
+                <label for="description">Description</label>
+                {{ form.description }}
+                <div id="wordCountMessage"></div>
+            </div>
+            <div style="justify-content: space-between;" class="names">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    {{ form.city }}
+                </div>
+                <div class="form-group">
+                    <label for="place">Place</label>
+                    {{ form.places }}
+                </div>
+                <div class="form-group">
+                    <label for="weather">Weather</label>
+                    {{ form.weather }}
+                </div>
+                
+            </div>
+            <div class="names">
+                <div class="form-group">
+                    <label for="family_friendly">Family friendly</label>                       
+                    <div class="checkmark">{{ form.family_friendly }}</div>               
+                </div>
+                <div class="form-group">
+                    <label for="view">Beautiful View</label>                       
+                    <div class="checkmark">{{ form.view }}</div>               
+                </div>
+            </div>
+                
+            <div class="form-group">
+                <label for="images">Images</label>
+                <input type="file" name="images" multiple class="input-images">
+            </div>
+            
+            <!-- Add a map container -->
+            <span>Drag the pin to the wanted location and click on the button.</span>
+            <div id="map" style="height: 300px;"></div>
+            <input type="hidden" name="latitude" id="id_latitude" value="">
+            <input type="hidden" name="longitude" id="id_longitude" value="">
+            <span class="error">{{ form.latitude.errors }}</span>
+
+            <!-- Add a button to set the location on the map -->
+            <button class="map-submit" type="button" id="set-location-button">Set Location on Map</button>
+            <button class="submit" type="submit">Submit Location</button>
+        </form>
+        <div id="notification" class="hidden">
+            <span id="notification-text"></span>
+        </div>
+    </div>
+</body>
+<script>
+ // Initialize the map
+ const map = L.map('map').setView([0, 0], 13); // Default view centered at (0, 0)
+
+// Add a tile layer (you can choose a different tile source)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// Initialize a marker for the location and make it draggable
+const locationMarker = L.marker([0, 0], { draggable: true }).addTo(map);
+
+// Function to set the location marker at a given latitude and longitude
+function setLocationOnMap(latitude, longitude) {
+    locationMarker.setLatLng([latitude, longitude]);
+    map.setView([latitude, longitude], 13); // Set map view to the new location
+}
+
+// Get the current location using the Geolocation API
+if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+        const { latitude, longitude } = position.coords;
+        
+        // Set the location marker to the current location
+        setLocationOnMap(latitude, longitude);
+    });
+} else {
+    // Handle the case where geolocation is not supported or denied by the user
+    console.log("Geolocation is not available or denied by the user.");
+}
+var mapSubmit = document.getElementById("set-location-button");
+
+// Event listener for the "Set Location on Map" button
+document.getElementById('set-location-button').addEventListener('click', () => {
+    // Get the current location of the marker
+    const { lat, lng } = locationMarker.getLatLng();
+    mapSubmit.style.backgroundColor = "#33673b";
+
+    // Update the hidden form fields with the latitude and longitude
+    document.getElementById('id_latitude').value = lat;
+    document.getElementById('id_longitude').value = lng;
+    
+    // Disable marker dragging after saving the location
+    locationMarker.dragging.disable();
+});
+
+
+
+    // rodha mba3d
+    const textArea = document.getElementById("textArea");
+    const wordCountMessage = document.getElementById("wordCountMessage");
+
+    
+    const minimumWordCount = 10;
+
+    
+    textArea.addEventListener("input", function () {
+      
+      const words = textArea.value.split(/\s+/);
+
+      
+      const filteredWords = words.filter(word => word.trim() !== "");
+
+     
+      const wordCount = filteredWords.length;
+
+      
+      wordCountMessage.textContent = `Word Count: ${wordCount}`;
+
+      if (wordCount < minimumWordCount) {
+        wordCountMessage.classList.add("error");
+        wordCountMessage.textContent += ` (Minimum ${minimumWordCount} words required)`;
+        textArea.setCustomValidity(`Please enter at least ${minimumWordCount} words.`);
+      } else {
+        wordCountMessage.classList.remove("error");
+        textArea.setCustomValidity("");
+      }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "dashboard/adminBase.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'dashboard/styleUsers.css' %}">
+    <title>Admin Users</title>
+</head>
+<body>
+
+    <div class="content">
+        <h1>Admin Users</h1>
+
+        <div class="container">
+            <h2>User verification requests</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>City</th>
+                        <th>Address</th>
+                        <th>State</th>
+                        <th>ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                    <tr>
+                        <td>{{ request.user.first_name }}</td>
+                        <td>{{ request.user.last_name }}</td>
+                        <td>{{ request.user.email }}</td>
+                        <td>{{ request.phone_number }}</td>
+                        <td>{{ request.city }}</td>
+                        <td>{{ request.address }}</td>                        
+                        <td>{{ request.state }}</td>
+                        <td class="id-card-url-cell" data-idCardUrl="{{ request.idCard.url }}">
+                            <button class="btn" onclick="viewID(this)">View ID</button>
+                        </td>
+                        
+                        <td><a href="{% url 'admin-user-details' request.user.id %}" class="btn">More</a></td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table> 
+            <div id="image-container"></div> 
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+function viewID(button) {
+    var row = $(button).closest('tr');
+    var imageURLCell = row.find('.id-card-url-cell');
+    var imageURL = imageURLCell.data('idcardurl');
+
+    if (imageURL) {
+        var image = $('<img>').addClass('modal-image').attr('src', imageURL);
+
+        var modal = $('<div>').addClass('modal-content');
+        var closeBtn = $('<span>').html('&times;').addClass('modal-close');
+
+        closeBtn.on('click', function () {
+            modalOverlay.hide(); // Hide the modal overlay
+        });
+
+        modal.append(closeBtn);
+        modal.append(image);
+
+        var modalOverlay = $('<div>').addClass('modal-overlay');
+        modalOverlay.append(modal);
+
+        $('body').append(modalOverlay);
+        modalOverlay.show(); // Show the modal overlay
+    } else {
+        console.error('Image URL is undefined.');
+    }
+}
+
+</script>
+
+</body>
+{% endblock %}

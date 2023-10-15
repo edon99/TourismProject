@@ -1,0 +1,42 @@
+{% extends "dashboard/adminBase.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'dashboard/styleDashboard.css' %}">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+    <div class="content">
+        <h1>Admin Dashboard</h1>
+
+        <div class="container">
+            <h2>User verification requests</h2>
+            <p>User requests for verification to be eligible to submit locations. </p>
+            <div class="link">
+                <a href="{% url 'admin-users' %}">
+                   <button class="button">
+                        View All
+                    </button> 
+                </a>
+                
+            </div>
+        </div>
+
+        <div class="container">
+            <h2>Post verification requests</h2>
+            <p>Locations that have been submitted by verified users.</p>
+            <div class="link">
+                <a href="">
+                   <button class="button">
+                        View All
+                    </button> 
+                </a>
+                
+            </div>
+        </div>
+
+
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "tourism/base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'tourism/styleHome.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Abril+Fatface" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'tourism/styleHomeGalerie.css' %}">
+    <title>Home</title>
+</head>
+<body>
+    <div class="home-container">
+        <h1 class="title">Discover the beautiful secrets <br> of every city.</h1>
+        <p class="description">Look up special touristic places, good restaurants and areas <br> you will never forget!</p>
+    </div>
+
+    <div class="search-container">   
+        <form method="GET" action="{% url 'locations' %}" class="search-form">
+           <input type="text" name="query" placeholder="What are you looking for?" class="search">
+            <button class="submit" type="submit">Search</button> 
+        </form>
+    </div>
+
+    <div id="container">
+        <div class="slide anim-in">
+          <div class="image" style="background-image: url(https://c0.wallpaperflare.com/preview/269/704/1016/concrete-bridge-near-house-and-mountains.jpg);"></div>
+          <div class="overlay"></div>
+          <div class="content">
+            <h1 class="title" data-title="Constantine">Constantine</h1>
+        
+          </div>
+          
+        </div>
+        <div class="slide anim-in">
+          <div class="image" style="background-image: url(https://thumbs.dreamstime.com/b/algiers-city-capital-algeria-58967339.jpg);"></div>
+          <div class="overlay"></div>
+          <div class="content">
+            <h1 class="title" data-title="Algiers">Algiers</h1>
+          </div>
+          <div class="btn-close"></div>
+        </div>
+        <div class="slide anim-in">
+          <div class="image" style="background-image: url(https://www.adventurealgeria.com/wp-content/uploads/2021/01/oran-1170x658.jpg);"></div>
+          <div class="overlay"></div>
+          <div class="content">
+            <h1 class="title" data-title="Oran">Oran</h1>
+           
+          </div>
+          
+        </div>
+        <div class="slide anim-in">
+          <div class="image" style="background-image: url(https://cf.bstatic.com/xdata/images/hotel/max1024x768/308170499.jpg?k=1f89e596172b73a5cdaaad8e7b88b89e9edc2e280f28fd75cab6a8e1e5470872&o=&hp=1);"></div>
+          <div class="overlay"></div>
+          <div class="content">
+            <h1 class="title" data-title="Setif">Setif</h1>
+        
+          </div>
+        
+        </div>
+        {% endblock %}
+
+
+</body>

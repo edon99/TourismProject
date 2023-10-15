@@ -1,0 +1,74 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: left;
+    gap: 40px;
+}
+
+.info{
+    width: 100%;
+    margin-top: 20px;
+    color: #000;
+    display: flex;
+    justify-content: space-evenly;
+    text-align: left;
+    gap: 20px;
+}
+.info.label{
+    background-color: #dcdcdc;
+    padding: 2px;
+    border-radius: 5px;
+}
+.info span{
+    font-size: 22px;
+    width: 50%;
+    
+}
+
+.image img{
+    width: 500px;
+    object-fit: contain;
+    /* object-fit: cover; */
+    height: 400px;
+    border-radius: 10px;
+}
+
+.btn{
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    color: #dcdcdc;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+}
+.btn.accept{
+    background-color: #33673b;
+}
+.btn.refuse{
+    background-color: rgb(146, 0, 0);
+}
+.btn.accept:hover{
+    background-color: #357e40;
+    color: #fff;
+}
+.btn.refuse:hover{
+    background-color: rgb(165, 2, 2);
+    color: #fff;
+}
