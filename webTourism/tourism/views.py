@@ -9,7 +9,24 @@ from django.urls import reverse
 from tourism.models import User, Location , LocationImage, Verification, Rating
 from .forms import UserForm, LocationForm, VerificationForm, UserUpdateForm, LocationRating
 from django.contrib import messages
+from .serializers import UserSerializer,LocationSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 # Create your views here.
+
+@api_view(['GET','POST'])
+def apiTest(request):
+    locations = Location.objects.all()
+    locationSerial = LocationSerializer(locations, many=True)
+    return Response(locationSerial.data)
+
+def LocationAPI(request):
+    api_response = apiTest(request)
+    data = api_response.data
+    return render(request, 'tourism/api.html',{'locations':data})
+
+
 
 def home(request):
     return render (request, 'tourism/home.html')
@@ -72,7 +89,7 @@ def getVerified(request):
 def locations(request):
     query = request.GET.get('query')
     locations = Location.objects.all()
-    # Filter locations based on search query
+    
     if query:
         locations = locations.filter(
             Q(title__icontains=query) | 

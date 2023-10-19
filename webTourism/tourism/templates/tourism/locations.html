@@ -1,7 +1,9 @@
 {% extends "tourism/base.html" %}
+{% load static tailwind_tags %}
 {% load static %}
 {% block content %}
 <head>
+    {% tailwind_css %}
     <title>Locations</title>
     <link rel="stylesheet" href="{% static 'tourism/styleLocations.css' %}">
 </head>
@@ -78,12 +80,13 @@
                 
                 <img src="{{ location.location_images.first }}" alt="">
             <div class="text">
-                <h1 style="text-align: left;"><a class="location-title" style="text-decoration: none;" href="{% url 'location-details' location.pk %}">{{ location.title }}</a></h1>
+                <h1  style="text-align: left;"><a class="location-title" style="text-decoration: none;" href="{% url 'location-details' location.pk %}">{{ location.title }}</a></h1>
+                <span class="text-blue-400" >tailwind test</span>
                 <div class="under-title">
                     <span>{{ location.city }}</span><span>{{ location.weather }}</span><span>{{ location.places }}</span>
                 </div>
                 <div class="star-rating">
-                    <div class="stars-container">                      
+                    <div class="stars-container">    
                         {{ location.location_rating.rating }}                       
                     </div>
                 </div>

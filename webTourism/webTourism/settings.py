@@ -42,17 +42,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard',
-    'tourism',
     'tailwind',
+    'theme',
+    'django_browser_reload',
+    'tourism',
     'django.contrib.sites',
     "allauth",
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'rest_framework',
 ]
 
-TAILWIND_APP_NAME = ''
-INTERNAL_IPS = ''
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 SOCIALACCOUNT_PROVIDERS = {
     "google":{
@@ -76,8 +81,21 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
     
 ]
+
+# settings.py
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
 
 ROOT_URLCONF = 'webTourism.urls'
 
