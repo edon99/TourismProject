@@ -137,7 +137,8 @@ def locationDetails(request, pk):
     avg_rating = Rating.objects.filter(location=pk).aggregate(avg_rating=Avg('rating'))
     average_rating = avg_rating['avg_rating'] if avg_rating['avg_rating'] is not None else 0
     average_rating = round(average_rating, 1)
-    return render(request, 'tourism/locationDetails.html',{'location':location,'average_rating':average_rating})
+    comments = Rating.objects.filter(location=pk)[:5]
+    return render(request, 'tourism/locationDetails.html',{'location':location,'average_rating':average_rating,'comments':comments})
 
 def locationRating(request, pk):
     location = Location.objects.get(id=pk)
