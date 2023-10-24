@@ -14,6 +14,6 @@ urlpatterns = [
     path('locations/<int:pk>/rating',  view.locationRating, name='location-rating'),
     path('get-verified/',  view.getVerified, name='get-verified'),
     path('profile/<int:pk>',  view.profile, name='profile'),
-    path('api/', view.apiTest, name='api'),
-    path('apiLocations/', view.LocationAPI, name='locations-api'),
+    # path('api/', view.LocationAPI, name='api'),
+    
 ]

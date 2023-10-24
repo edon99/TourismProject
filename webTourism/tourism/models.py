@@ -59,6 +59,7 @@ class User(AbstractUser):
     base_role = Role.USER
     role = models.CharField(max_length=50, choices=Role.choices, default=base_role)
     verified = models.BooleanField(default=False)
+    channel_name = models.CharField(max_length=255, blank=True, null=True)
     
     def save(self, *args, **kwargs):
             return super().save(*args, **kwargs)

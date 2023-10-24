@@ -35,6 +35,8 @@ ALLOWED_HOSTS = []
 SITE_ID=2
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,6 +56,14 @@ INSTALLED_APPS = [
     'rest_framework',
     
 ]
+
+ASGI_APPLICATION = 'webTourism.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [

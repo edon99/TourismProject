@@ -15,16 +15,9 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-@api_view(['GET','POST'])
-def apiTest(request):
-    locations = Location.objects.all()
-    locationSerial = LocationSerializer(locations, many=True)
-    return Response(locationSerial.data)
 
-def LocationAPI(request):
-    api_response = apiTest(request)
-    data = api_response.data
-    return render(request, 'tourism/api.html',{'locations':data})
+# def LocationAPI(request): 
+#     return render(request, 'tourism/api.html')
 
 
 
