@@ -141,7 +141,9 @@
     messages.insertAdjacentHTML('beforeend',`<div>
                                             <p>${data.current}: ${data.message}</p>
                                             </div>`)
+    console.log('Data:',data.message);
   }
+  
   };
 
   
@@ -152,7 +154,8 @@
     let message = e.target.message.value
     chatSocket.send(JSON.stringify({
       'message':message,
-      'user':'{{user.username}}'
+      'user':'{{user.username}}',
+      'target':10,
     }))
     form.reset()
   })
